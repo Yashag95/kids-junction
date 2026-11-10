@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   Phone,
@@ -18,6 +18,8 @@ import {
   Clock,
   Star,
   ChevronDown,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { shop } from "./data/shop";
 import { categories, products } from "./data/products";
@@ -42,6 +44,16 @@ function Brand() {
 }
 function Header() {
   const [open, setOpen] = useState(false);
+  const [dark, setDark] = useState(() => {
+    const savedTheme = localStorage.getItem("kids-junction-theme");
+    return savedTheme === "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    localStorage.setItem("kids-junction-theme", dark ? "dark" : "light");
+  }, [dark]);
+
   return (
     <>
       <div className="topbar">
@@ -75,6 +87,15 @@ function Header() {
               </a>
             ))}
           </nav>
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={() => setDark((current) => !current)}
+            aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+            title={dark ? "Light theme" : "Dark theme"}
+          >
+            {dark ? <Sun size={19} /> : <Moon size={19} />}
+          </button>
           <a className="btn btn-primary header-call" href={tel}>
             <Phone size={17} /> Call Us
           </a>
@@ -468,6 +489,9 @@ function Footer() {
             Making playtime brighter, one toy at a time. Come explore our world
             of fun in Chandpur!
           </p>
+          <p className="footer-proprietor">
+            <strong>Proprietor:</strong> {shop.proprietor}
+          </p>
         </div>
         <div>
           <h4>Explore</h4>
@@ -508,6 +532,10 @@ function SeoSchema() {
     description:
       "Local toy shop offering toys, games, dolls, building blocks, remote control cars and gifts.",
     telephone: shop.phone,
+    founder: {
+      "@type": "Person",
+      name: shop.proprietor,
+    },
     address: {
       "@type": "PostalAddress",
       streetAddress: "Navyug Market",

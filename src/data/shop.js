@@ -1,6 +1,7 @@
 // Edit shop details here. The entire website reads from this file.
 export const shop = {
   name: 'Kids Juction', // Official spelling provided by the shop
+  proprietor: 'Rachit Agarwal',
   tagline: 'Big smiles start with little surprises!',
   phone: '+91-8126988054',
   phoneHref: '+918126988054',
