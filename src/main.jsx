@@ -42,6 +42,23 @@ function Brand() {
     </a>
   );
 }
+function TopbarMessage({ duplicate = false }) {
+  return (
+    <div
+      className={duplicate ? "top-message duplicate" : "top-message"}
+      aria-hidden={duplicate || undefined}
+    >
+      <span>
+        <MapPin size={14} />
+        {shop.fullAddress}
+      </span>
+      <a href={tel} tabIndex={duplicate ? -1 : undefined}>
+        <Phone size={14} />
+        {shop.phone}
+      </a>
+    </div>
+  );
+}
 function Header() {
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(() => {
@@ -58,14 +75,10 @@ function Header() {
     <>
       <div className="topbar">
         <div className="container top-inner">
-          <span>
-            <MapPin size={14} />
-            {shop.addressLine}, {shop.district}
-          </span>
-          <a href={tel}>
-            <Phone size={14} />
-            {shop.phone}
-          </a>
+          <div className="top-track">
+            <TopbarMessage />
+            <TopbarMessage duplicate />
+          </div>
         </div>
       </div>
       <header className="header">
@@ -87,18 +100,22 @@ function Header() {
               </a>
             ))}
           </nav>
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={() => setDark((current) => !current)}
-            aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
-            title={dark ? "Light theme" : "Dark theme"}
-          >
-            {dark ? <Sun size={19} /> : <Moon size={19} />}
-          </button>
-          <a className="btn btn-primary header-call" href={tel}>
-            <Phone size={17} /> Call Us
-          </a>
+          <div className="nav-actions">
+            <button
+              className="theme-toggle"
+              type="button"
+              onClick={() => setDark((current) => !current)}
+              aria-label={
+                dark ? "Switch to light theme" : "Switch to dark theme"
+              }
+              title={dark ? "Light theme" : "Dark theme"}
+            >
+              {dark ? <Sun size={19} /> : <Moon size={19} />}
+            </button>
+            <a className="btn btn-primary header-call" href={tel}>
+              <Phone size={17} /> <span>Call Us</span>
+            </a>
+          </div>
           <button
             className="menu-toggle"
             onClick={() => setOpen(!open)}

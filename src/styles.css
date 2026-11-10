@@ -52,6 +52,19 @@ img {
   align-items: center;
   gap: 8px;
 }
+.top-track {
+  width: 100%;
+}
+.top-message {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.top-message.duplicate {
+  display: none;
+}
 .header {
   background: #fff;
   position: sticky;
@@ -145,6 +158,11 @@ img {
 }
 .header-call {
   padding: 12px 22px;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .menu-toggle {
   display: none;
@@ -819,13 +837,28 @@ img {
     padding: 0 18px;
   }
   .top-inner {
-    justify-content: center;
+    padding: 0;
+    overflow: hidden;
   }
-  .top-inner span {
-    display: none;
+  .top-track {
+    width: max-content;
+    display: flex;
+    animation: mobile-top-ticker 18s linear infinite;
+    will-change: transform;
+  }
+  .top-message,
+  .top-message.duplicate {
+    width: max-content;
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    gap: 32px;
+    padding-right: 32px;
+    white-space: nowrap;
   }
   .nav {
     height: 70px;
+    gap: 10px;
   }
   .brand strong {
     font-size: 25px;
@@ -834,10 +867,29 @@ img {
     font-size: 30px;
   }
   .header-call {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    gap: 0;
+  }
+  .header-call span {
     display: none;
   }
+  .nav-actions {
+    margin-left: auto;
+    gap: 6px;
+  }
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
   .menu-toggle {
-    display: block;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    display: grid;
+    place-items: center;
   }
   .navlinks {
     display: none;
@@ -1000,6 +1052,14 @@ img {
   .floating-call,
   .floating-whatsapp {
     display: flex;
+  }
+}
+@keyframes mobile-top-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 @media (max-width: 390px) {
@@ -1177,10 +1237,19 @@ img {
   color: #aeb9cb;
 }
 @media (prefers-reduced-motion: reduce) {
+  .top-track {
+    animation: none !important;
+  }
+  .top-message.duplicate {
+    display: none;
+  }
   *,
   *::before,
   *::after {
     scroll-behavior: auto !important;
     transition: none !important;
   }
+}
+.nl-badge-frame{
+  display: none !important;
 }
